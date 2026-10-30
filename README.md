@@ -94,6 +94,10 @@ url: https://www.kaggle.com/competitions/<slug>/discussion/<id>
 
 ## 必要なもの
 
+安全な利用方法は [SECURITY.md](SECURITY.md) を参照。表計算ソフトでは `collect` が生成する
+`writeups_index.spreadsheet.csv` を開く（`writeups_index.csv` は未加工の機械処理用）。
+外部から受け取った HTML/JavaScript は `--page` で実行しない。
+
 | 段 | 必要 |
 |---|---|
 | `new` `diff` `lint` | Python 3.10+（標準ライブラリのみ） |

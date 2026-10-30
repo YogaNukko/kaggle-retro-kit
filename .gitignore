@@ -1,6 +1,17 @@
 # 取得物（解法記事の本文・LB・提出一覧）。再配布しない
 tmp/
 
+# Local credentials and environment files
+kaggle.json
+.kaggle/
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.venv/
+.retro-render-*/
+
 # 動画の作業ファイルと書き出した実体（MP4 / GIF は GitHub Release などに添付する）
 video/node_modules/
 node_modules/
