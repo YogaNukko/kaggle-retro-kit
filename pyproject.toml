@@ -1,0 +1,33 @@
+[project]
+name = "kaggle-retro-kit"
+version = "0.1.0"
+description = "終わった Kaggle コンペを、メダル圏ごとの差分分析と解説動画にする"
+requires-python = ">=3.10"
+readme = "README.md"
+license = { text = "MIT" }
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.6"]
+kaggle = ["kaggle>=1.6"]
+
+[project.scripts]
+retro = "retrokit.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["retrokit"]
+
+[tool.ruff]
+line-length = 140
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "RUF"]
+ignore = ["RUF001", "RUF002", "RUF003"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

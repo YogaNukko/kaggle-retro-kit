@@ -1,0 +1,14 @@
+{
+  "name": "kaggle-retro-kit-video",
+  "private": true,
+  "description": "Renderer for the retrospective explainer video (Playwright screenshots -> ffmpeg)",
+  "type": "module",
+  "scripts": {
+    "info": "node tools/render.mjs info",
+    "sheet": "node tools/render.mjs sheet 24",
+    "video": "node tools/render.mjs video"
+  },
+  "dependencies": {
+    "playwright-core": "1.59.1"
+  }
+}

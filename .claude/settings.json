@@ -1,0 +1,34 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python retro.py:*)",
+      "Bash(python3 retro.py:*)",
+      "Bash(./retro.py:*)",
+      "Bash(python -m pytest:*)",
+      "Bash(python3 -m pytest:*)",
+      "Bash(ruff:*)",
+      "Bash(kaggle competitions list:*)",
+      "Bash(kaggle competitions leaderboard:*)",
+      "Bash(kaggle competitions submissions:*)",
+      "Bash(kaggle competitions topics list:*)",
+      "Bash(kaggle competitions topics show:*)",
+      "Bash(kaggle kernels list:*)",
+      "Bash(kaggle kernels pull:*)",
+      "Bash(node tools/render.mjs:*)",
+      "Bash(node video/tools/render.mjs:*)",
+      "Bash(ffprobe:*)",
+      "WebFetch",
+      "WebSearch"
+    ],
+    "ask": [
+      "Bash(kaggle competitions download:*)",
+      "Bash(kaggle competitions submit:*)",
+      "Bash(kaggle kernels push:*)",
+      "Bash(kaggle datasets:*)",
+      "Bash(npm install:*)",
+      "Bash(git clone:*)",
+      "Bash(git push:*)",
+      "Bash(gh release:*)"
+    ]
+  }
+}

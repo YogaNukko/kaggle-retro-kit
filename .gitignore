@@ -1,0 +1,20 @@
+# 取得物（解法記事の本文・LB・提出一覧）。再配布しない
+tmp/
+
+# 動画の作業ファイルと書き出した実体（MP4 / GIF は GitHub Release などに添付する）
+video/node_modules/
+node_modules/
+competitions/*/video/out/frames/
+competitions/*/video/out/*.mp4
+competitions/*/video/out/*.gif
+competitions/*/video/out/*.webm
+examples/*/video/out/frames/
+examples/*/video/out/*.mp4
+examples/*/video/out/*.gif
+examples/*/video/out/*.webm
+
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+.claude/settings.local.json

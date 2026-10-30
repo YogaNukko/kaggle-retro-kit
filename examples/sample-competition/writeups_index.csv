@@ -1,0 +1,7 @@
+topic_id,rank,medal,team,title,url,posted_at,votes,fetched_at,card,analyzed,notes
+1001,1,gold,aurora,1 位の解法,https://www.kaggle.com/competitions/sample-competition/discussion/1001,2026-10-01,120,2026-10-05T00:00:00Z,solutions/001-aurora.md,yes,
+1005,5,gold,boreal,5th place solution — 画像を読む教師,https://www.kaggle.com/competitions/sample-competition/discussion/1005,2026-10-02,80,2026-10-05T00:00:00Z,solutions/005-boreal.md,yes,
+1021,21,silver,cirrus,21st place writeup,https://www.kaggle.com/competitions/sample-competition/discussion/1021,2026-10-02,45,2026-10-05T00:00:00Z,solutions/021-cirrus.md,yes,
+1033,33,silver,delta,#33 solution,https://www.kaggle.com/competitions/sample-competition/discussion/1033,2026-10-03,30,2026-10-05T00:00:00Z,solutions/033-delta.md,yes,
+1063,63,bronze,echo,63rd place — what worked,https://www.kaggle.com/competitions/sample-competition/discussion/1063,2026-10-03,22,2026-10-05T00:00:00Z,solutions/063-echo.md,yes,
+1072,72,bronze,fjord,72nd place solution,https://www.kaggle.com/competitions/sample-competition/discussion/1072,2026-10-04,18,2026-10-05T00:00:00Z,solutions/072-fjord.md,yes,

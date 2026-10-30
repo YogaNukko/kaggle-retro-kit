@@ -1,0 +1,29 @@
+name: ci
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - run: pip install ruff pytest
+      - run: ruff check retrokit tests
+      - run: python -m pytest -q
+      - run: python retro.py lint examples/sample-competition && python retro.py diff examples/sample-competition
+  video-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - run: cd video && npm install && npx playwright-core install --with-deps chromium
+      - run: python retro.py diff examples/sample-competition
+      - run: cd video && node tools/render.mjs info --page pages/explainer.html --data ../examples/sample-competition/video/data.json --out /tmp/out
+      - run: cd video && node tools/render.mjs sheet 12 --page pages/explainer.html --data ../examples/sample-competition/video/data.json --out /tmp/out

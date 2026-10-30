@@ -1,0 +1,815 @@
+{
+  "slug": "sample-competition",
+  "name": "サンプルコンペ",
+  "own_rank": 102,
+  "teams": 1250,
+  "cutoffs": {
+    "gold": 12,
+    "silver": 62,
+    "bronze": 125
+  },
+  "own_band": "none",
+  "top_n": 20,
+  "cards": [
+    {
+      "label": "#1",
+      "rank": 1,
+      "team": "aurora",
+      "band": "gold",
+      "private": 0.9611,
+      "single": 0.9582,
+      "url": "https://www.kaggle.com/competitions/sample-competition/discussion/1001",
+      "file": "001-aurora.md"
+    },
+    {
+      "label": "#5",
+      "rank": 5,
+      "team": "boreal",
+      "band": "gold",
+      "private": 0.9598,
+      "single": 0.9574,
+      "url": "https://www.kaggle.com/competitions/sample-competition/discussion/1005",
+      "file": "005-boreal.md"
+    },
+    {
+      "label": "#21",
+      "rank": 21,
+      "team": "cirrus",
+      "band": "silver",
+      "private": 0.9543,
+      "single": 0.9501,
+      "url": "https://www.kaggle.com/competitions/sample-competition/discussion/1021",
+      "file": "021-cirrus.md"
+    },
+    {
+      "label": "#33",
+      "rank": 33,
+      "team": "delta",
+      "band": "silver",
+      "private": 0.9531,
+      "single": 0.9488,
+      "url": "https://www.kaggle.com/competitions/sample-competition/discussion/1033",
+      "file": "033-delta.md"
+    },
+    {
+      "label": "#63",
+      "rank": 63,
+      "team": "echo",
+      "band": "bronze",
+      "private": 0.9498,
+      "single": 0.947,
+      "url": "https://www.kaggle.com/competitions/sample-competition/discussion/1063",
+      "file": "063-echo.md"
+    },
+    {
+      "label": "#72",
+      "rank": 72,
+      "team": "fjord",
+      "band": "bronze",
+      "private": 0.9481,
+      "single": 0.9455,
+      "url": "https://www.kaggle.com/competitions/sample-competition/discussion/1072",
+      "file": "072-fjord.md"
+    }
+  ],
+  "elements": [
+    {
+      "name": "2.5D のスライス積み",
+      "dimension": "features",
+      "cells": {
+        "#1": "yes",
+        "#5": "yes",
+        "#21": "yes",
+        "#33": "yes",
+        "#63": "yes",
+        "#72": "yes"
+      },
+      "own": "yes",
+      "used_top": 2,
+      "known_top": 2,
+      "band_usage": {
+        "gold": {
+          "used": 2,
+          "known": 2,
+          "unknown": 0
+        },
+        "silver": {
+          "used": 2,
+          "known": 2,
+          "unknown": 0
+        },
+        "bronze": {
+          "used": 2,
+          "known": 2,
+          "unknown": 0
+        },
+        "none": {
+          "used": 0,
+          "known": 0,
+          "unknown": 0
+        },
+        "unknown": {
+          "used": 0,
+          "known": 0,
+          "unknown": 0
+        }
+      },
+      "effects": [],
+      "own_effect": "土台",
+      "verdict": "not a boundary",
+      "gap_score": 10.2
+    },
+    {
+      "name": "関節中心の切り出し",
+      "dimension": "preprocessing",
+      "cells": {
+        "#1": "yes",
+        "#5": "unknown",
+        "#21": "yes",
+        "#33": "unknown",
+        "#63": "yes",
+        "#72": "yes"
+      },
+      "own": "yes",
+      "used_top": 1,
+      "known_top": 1,
+      "band_usage": {
+        "gold": {
+          "used": 1,
+          "known": 1,
+          "unknown": 1
+        },
+        "silver": {
+          "used": 1,
+          "known": 1,
+          "unknown": 1
+        },
+        "bronze": {
+          "used": 2,
+          "known": 2,
+          "unknown": 0
+        },
+        "none": {
+          "used": 0,
+          "known": 0,
+          "unknown": 0
+        },
+        "unknown": {
+          "used": 0,
+          "known": 0,
+          "unknown": 0
+        }
+      },
+      "effects": [],
+      "own_effect": "全体より CV +0.003（exp041）",
+      "verdict": "not a boundary",
+      "gap_score": 10.1
+    },
+    {
+      "name": "局所切り出しの別モデル",
+      "dimension": "model",
+      "cells": {
+        "#1": "yes",
+        "#5": "yes",
+        "#21": "unknown",
+        "#33": "unknown",
+        "#63": "unknown",
+        "#72": "unknown"
+      },
+      "own": "no",
+      "used_top": 2,
+      "known_top": 2,
+      "band_usage": {
+        "gold": {
+          "used": 2,
+          "known": 2,
+          "unknown": 0
+        },
+        "silver": {
+          "used": 0,
+          "known": 0,
+          "unknown": 2
+        },
+        "bronze": {
+          "used": 0,
+          "known": 0,
+          "unknown": 2
+        },
+        "none": {
+          "used": 0,
+          "known": 0,
+          "unknown": 0
+        },
+        "unknown": {
+          "used": 0,
+          "known": 0,
+          "unknown": 0
+        }
+      },
+      "effects": [
+        {
+          "label": "#1",
+          "effect": "局所の 2 所見で +0.003"
+        }
+      ],
+      "own_effect": "exp207 保留",
+      "verdict": "candidate",
+      "gap_score": 12.2
+    },
+    {
+      "name": "テストの疑似ラベル",
+      "dimension": "training",
+      "cells": {
+        "#1": "no",
+        "#5": "unknown",
+        "#21": "unknown",
+        "#33": "yes",
+        "#63": "unknown",
+        "#72": "unknown"
+      },
+      "own": "no",
+      "used_top": 0,
+      "known_top": 1,
+      "band_usage": {
+        "gold": {
+          "used": 0,
+          "known": 1,
+          "unknown": 1
+        },
+        "silver": {
+          "used": 1,
+          "known": 1,
+          "unknown": 1
+        },
+        "bronze": {
+          "used": 0,
+          "known": 0,
+          "unknown": 2
+        },
+        "none": {
+          "used": 0,
+          "known": 0,
+          "unknown": 0
+        },
+        "unknown": {
+          "used": 0,
+          "known": 0,
+          "unknown": 0
+        }
+      },
+      "effects": [
+        {
+          "label": "#33",
+          "effect": "CV +0.002"
+        }
+      ],
+      "own_effect": "",
+      "verdict": "candidate",
+      "gap_score": 7.0
+    },
+    {
+      "name": "施設ごとのラベル補正",
+      "dimension": "training",
+      "cells": {
+        "#1": "yes",
+        "#5": "unknown",
+        "#21": "yes",
+        "#33": "yes",
+        "#63": "yes",
+        "#72": "no"
+      },
+      "own": "no",
+      "used_top": 1,
+      "known_top": 1,
+      "band_usage": {
+        "gold": {
+          "used": 1,
+          "known": 1,
+          "unknown": 1
+        },
+        "silver": {
+          "used": 2,
+          "known": 2,
+          "unknown": 0
+        },
+        "bronze": {
+          "used": 1,
+          "known": 2,
+          "unknown": 0
+        },
+        "none": {
+          "used": 0,
+          "known": 0,
+          "unknown": 0
+        },
+        "unknown": {
+          "used": 0,
+          "known": 0,
+          "unknown": 0
+        }
+      },
+      "effects": [
+        {
+          "label": "#1",
+          "effect": "private +0.002"
+        },
+        {
+          "label": "#21",
+          "effect": "private +0.003"
+        },
+        {
+          "label": "#63",
+          "effect": "private +0.002"
+        }
+      ],
+      "own_effect": "",
+      "verdict": "candidate",
+      "gap_score": 10.1
+    },
+    {
+      "name": "画像を読む教師ラベル",
+      "dimension": "training",
+      "cells": {
+        "#1": "yes",
+        "#5": "yes",
+        "#21": "no",
+        "#33": "unknown",
+        "#63": "unknown",
+        "#72": "no"
+      },
+      "own": "no",
+      "used_top": 2,
+      "known_top": 2,
+      "band_usage": {
+        "gold": {
+          "used": 2,
+          "known": 2,
+          "unknown": 0
+        },
+        "silver": {
+          "used": 0,
+          "known": 1,
+          "unknown": 1
+        },
+        "bronze": {
+          "used": 0,
+          "known": 1,
+          "unknown": 1
+        },
+        "none": {
+          "used": 0,
+          "known": 0,
+          "unknown": 0
+        },
+        "unknown": {
+          "used": 0,
+          "known": 0,
+          "unknown": 0
+        }
+      },
+      "effects": [
+        {
+          "label": "#1",
+          "effect": "レポート由来より CV +0.006（単一モデル）"
+        },
+        {
+          "label": "#5",
+          "effect": "CV +0.005"
+        }
+      ],
+      "own_effect": "画像だけの版を試して CV −0.001（exp120）、棄却",
+      "verdict": "candidate",
+      "gap_score": 7.2
+    },
+    {
+      "name": "患者で分けた 5 fold CV",
+      "dimension": "cv",
+      "cells": {
+        "#1": "yes",
+        "#5": "yes",
+        "#21": "yes",
+        "#33": "unknown",
+        "#63": "yes",
+        "#72": "unknown"
+      },
+      "own": "yes",
+      "used_top": 2,
+      "known_top": 2,
+      "band_usage": {
+        "gold": {
+          "used": 2,
+          "known": 2,
+          "unknown": 0
+        },
+        "silver": {
+          "used": 1,
+          "known": 1,
+          "unknown": 1
+        },
+        "bronze": {
+          "used": 1,
+          "known": 1,
+          "unknown": 1
+        },
+        "none": {
+          "used": 0,
+          "known": 0,
+          "unknown": 0
+        },
+        "unknown": {
+          "used": 0,
+          "known": 0,
+          "unknown": 0
+        }
+      },
+      "effects": [],
+      "own_effect": "",
+      "verdict": "not a boundary",
+      "gap_score": 10.2
+    },
+    {
+      "name": "反転 TTA",
+      "dimension": "inference",
+      "cells": {
+        "#1": "yes",
+        "#5": "unknown",
+        "#21": "yes",
+        "#33": "yes",
+        "#63": "unknown",
+        "#72": "yes"
+      },
+      "own": "yes",
+      "used_top": 1,
+      "known_top": 1,
+      "band_usage": {
+        "gold": {
+          "used": 1,
+          "known": 1,
+          "unknown": 1
+        },
+        "silver": {
+          "used": 2,
+          "known": 2,
+          "unknown": 0
+        },
+        "bronze": {
+          "used": 1,
+          "known": 1,
+          "unknown": 1
+        },
+        "none": {
+          "used": 0,
+          "known": 0,
+          "unknown": 0
+        },
+        "unknown": {
+          "used": 0,
+          "known": 0,
+          "unknown": 0
+        }
+      },
+      "effects": [],
+      "own_effect": "CV +0.0005",
+      "verdict": "not a boundary",
+      "gap_score": 10.1
+    },
+    {
+      "name": "公開 Notebook との合成",
+      "dimension": "ensemble",
+      "cells": {
+        "#1": "unknown",
+        "#5": "no",
+        "#21": "yes",
+        "#33": "yes",
+        "#63": "yes",
+        "#72": "yes"
+      },
+      "own": "yes",
+      "used_top": 0,
+      "known_top": 1,
+      "band_usage": {
+        "gold": {
+          "used": 0,
+          "known": 1,
+          "unknown": 1
+        },
+        "silver": {
+          "used": 2,
+          "known": 2,
+          "unknown": 0
+        },
+        "bronze": {
+          "used": 2,
+          "known": 2,
+          "unknown": 0
+        },
+        "none": {
+          "used": 0,
+          "known": 0,
+          "unknown": 0
+        },
+        "unknown": {
+          "used": 0,
+          "known": 0,
+          "unknown": 0
+        }
+      },
+      "effects": [],
+      "own_effect": "単一より private +0.006（実測）",
+      "verdict": "not a boundary",
+      "gap_score": 8.0
+    }
+  ],
+  "gaps": [
+    {
+      "name": "局所切り出しの別モデル",
+      "dimension": "model",
+      "cells": {
+        "#1": "yes",
+        "#5": "yes",
+        "#21": "unknown",
+        "#33": "unknown",
+        "#63": "unknown",
+        "#72": "unknown"
+      },
+      "own": "no",
+      "used_top": 2,
+      "known_top": 2,
+      "band_usage": {
+        "gold": {
+          "used": 2,
+          "known": 2,
+          "unknown": 0
+        },
+        "silver": {
+          "used": 0,
+          "known": 0,
+          "unknown": 2
+        },
+        "bronze": {
+          "used": 0,
+          "known": 0,
+          "unknown": 2
+        },
+        "none": {
+          "used": 0,
+          "known": 0,
+          "unknown": 0
+        },
+        "unknown": {
+          "used": 0,
+          "known": 0,
+          "unknown": 0
+        }
+      },
+      "effects": [
+        {
+          "label": "#1",
+          "effect": "局所の 2 所見で +0.003"
+        }
+      ],
+      "own_effect": "exp207 保留",
+      "verdict": "candidate",
+      "gap_score": 12.2
+    },
+    {
+      "name": "施設ごとのラベル補正",
+      "dimension": "training",
+      "cells": {
+        "#1": "yes",
+        "#5": "unknown",
+        "#21": "yes",
+        "#33": "yes",
+        "#63": "yes",
+        "#72": "no"
+      },
+      "own": "no",
+      "used_top": 1,
+      "known_top": 1,
+      "band_usage": {
+        "gold": {
+          "used": 1,
+          "known": 1,
+          "unknown": 1
+        },
+        "silver": {
+          "used": 2,
+          "known": 2,
+          "unknown": 0
+        },
+        "bronze": {
+          "used": 1,
+          "known": 2,
+          "unknown": 0
+        },
+        "none": {
+          "used": 0,
+          "known": 0,
+          "unknown": 0
+        },
+        "unknown": {
+          "used": 0,
+          "known": 0,
+          "unknown": 0
+        }
+      },
+      "effects": [
+        {
+          "label": "#1",
+          "effect": "private +0.002"
+        },
+        {
+          "label": "#21",
+          "effect": "private +0.003"
+        },
+        {
+          "label": "#63",
+          "effect": "private +0.002"
+        }
+      ],
+      "own_effect": "",
+      "verdict": "candidate",
+      "gap_score": 10.1
+    },
+    {
+      "name": "画像を読む教師ラベル",
+      "dimension": "training",
+      "cells": {
+        "#1": "yes",
+        "#5": "yes",
+        "#21": "no",
+        "#33": "unknown",
+        "#63": "unknown",
+        "#72": "no"
+      },
+      "own": "no",
+      "used_top": 2,
+      "known_top": 2,
+      "band_usage": {
+        "gold": {
+          "used": 2,
+          "known": 2,
+          "unknown": 0
+        },
+        "silver": {
+          "used": 0,
+          "known": 1,
+          "unknown": 1
+        },
+        "bronze": {
+          "used": 0,
+          "known": 1,
+          "unknown": 1
+        },
+        "none": {
+          "used": 0,
+          "known": 0,
+          "unknown": 0
+        },
+        "unknown": {
+          "used": 0,
+          "known": 0,
+          "unknown": 0
+        }
+      },
+      "effects": [
+        {
+          "label": "#1",
+          "effect": "レポート由来より CV +0.006（単一モデル）"
+        },
+        {
+          "label": "#5",
+          "effect": "CV +0.005"
+        }
+      ],
+      "own_effect": "画像だけの版を試して CV −0.001（exp120）、棄却",
+      "verdict": "candidate",
+      "gap_score": 7.2
+    },
+    {
+      "name": "テストの疑似ラベル",
+      "dimension": "training",
+      "cells": {
+        "#1": "no",
+        "#5": "unknown",
+        "#21": "unknown",
+        "#33": "yes",
+        "#63": "unknown",
+        "#72": "unknown"
+      },
+      "own": "no",
+      "used_top": 0,
+      "known_top": 1,
+      "band_usage": {
+        "gold": {
+          "used": 0,
+          "known": 1,
+          "unknown": 1
+        },
+        "silver": {
+          "used": 1,
+          "known": 1,
+          "unknown": 1
+        },
+        "bronze": {
+          "used": 0,
+          "known": 0,
+          "unknown": 2
+        },
+        "none": {
+          "used": 0,
+          "known": 0,
+          "unknown": 0
+        },
+        "unknown": {
+          "used": 0,
+          "known": 0,
+          "unknown": 0
+        }
+      },
+      "effects": [
+        {
+          "label": "#33",
+          "effect": "CV +0.002"
+        }
+      ],
+      "own_effect": "",
+      "verdict": "candidate",
+      "gap_score": 7.0
+    }
+  ],
+  "shared": [
+    "2.5D のスライス積み",
+    "局所切り出しの別モデル",
+    "画像を読む教師ラベル",
+    "患者で分けた 5 fold CV"
+  ],
+  "split": [],
+  "ladder": {
+    "bands": {
+      "gold": [
+        {
+          "label": "#1",
+          "rank": 1,
+          "private": 0.9611,
+          "single": 0.9582,
+          "team": "aurora"
+        },
+        {
+          "label": "#5",
+          "rank": 5,
+          "private": 0.9598,
+          "single": 0.9574,
+          "team": "boreal"
+        }
+      ],
+      "silver": [
+        {
+          "label": "#21",
+          "rank": 21,
+          "private": 0.9543,
+          "single": 0.9501,
+          "team": "cirrus"
+        },
+        {
+          "label": "#33",
+          "rank": 33,
+          "private": 0.9531,
+          "single": 0.9488,
+          "team": "delta"
+        }
+      ],
+      "bronze": [
+        {
+          "label": "#63",
+          "rank": 63,
+          "private": 0.9498,
+          "single": 0.947,
+          "team": "echo"
+        },
+        {
+          "label": "#72",
+          "rank": 72,
+          "private": 0.9481,
+          "single": 0.9455,
+          "team": "fjord"
+        }
+      ],
+      "none": [],
+      "unknown": []
+    },
+    "medians": {
+      "gold": 0.96045,
+      "silver": 0.9537,
+      "bronze": 0.94895,
+      "none": null,
+      "unknown": null
+    },
+    "own_final": 0.9452,
+    "own_best": 0.9461,
+    "own_single": 0.939,
+    "own_band": "none"
+  },
+  "higher_is_better": true,
+  "notes": []
+}
