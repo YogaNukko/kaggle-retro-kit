@@ -1,3 +1,4 @@
+import csv
 from pathlib import Path
 
 from retrokit.index import detect, detect_title, read_index, status, update, write_index
@@ -28,3 +29,19 @@ def test_detect_and_update_preserve_hand_edits(tmp_path: Path):
     write_index(idx, rows2)
     assert read_index(idx)[0]["card"] == "solutions/001-hand.md"
     assert "上位 20 位以内: 1 件が索引にあり、1 件が分析済み" in status(rows2)
+
+
+def test_spreadsheet_copy_neutralizes_formulas_without_changing_machine_index(tmp_path: Path):
+    titles = ['=1+1+N("solution")', '+1', '-1', '@SUM(1)', ' \t=1', '\r=1', '\n=1', '\ttext', '＝1', 'normal, "title"']
+    rows = [{"topic_id": str(i), "title": title, "notes": title} for i, title in enumerate(titles)]
+    path = tmp_path / "writeups_index.csv"
+    write_index(path, rows)
+    assert [r["title"] for r in read_index(path)] == titles
+    with path.with_name("writeups_index.spreadsheet.csv").open(encoding="utf-8-sig", newline="") as f:
+        exported = list(csv.DictReader(f))
+    for row, title in zip(exported, titles, strict=True):
+        expected = title if title.startswith("normal") else "'" + title
+        assert row["title"] == expected
+        assert row["notes"] == expected
+    write_index(path, rows)
+    assert [r["title"] for r in read_index(path)] == titles
