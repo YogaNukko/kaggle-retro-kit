@@ -1,6 +1,6 @@
 # kaggle-retro-kit
 
-**終わった Kaggle コンペを、メダル圏ごとの差分分析と 50 秒の解説動画にする。**
+**終わった Kaggle コンペを、メダル圏ごとの差分分析、50 秒の解説動画、LT 資料にする。**
 
 102 位で終わった。解法記事が出そろった。この道具が答えるのは、根拠を示せる数字で
 「**上の圏は自分と何が違ったのか。そのうち圏を分けた要素はどれか**」。
@@ -11,7 +11,7 @@
 
 [English README](README.en.md)
 
-## 5 つのコマンド
+## 主なコマンド
 
 ```bash
 python retro.py new     <slug> --name "<コンペ名>"       # competitions/<slug>/ を雛形から作る
@@ -20,9 +20,10 @@ python retro.py collect <slug>                            # 討論から解法�
 #   ... 解法 1 件 = カード 1 枚を書く（templates/solution_card.md。Claude Code の skill `retro-card` が書く）...
 python retro.py diff    <slug>                            # カード × 自陣 → diff.md + video/data.json
 python retro.py video   <slug> --gif                      # → MP4 / GIF / ポスター
+python retro.py lt      <slug> --minutes 5                # → LT 原稿・出典の bundle（PPTX 制作前の素材）
 ```
 
-設定ファイルなし、対話的な質問なし、Kaggle CLI の `kaggle.json` 以外の鍵は要らない。認証なしで試すなら:
+CLI は設定ファイルなし、対話的な質問なし、Kaggle CLI の `kaggle.json` 以外の鍵は要らない。PowerPoint 制作に使う外部スキルの実行環境は別に用意する。認証なしで試すなら:
 
 ```bash
 python retro.py diff  examples/sample-competition
@@ -38,6 +39,7 @@ python retro.py video examples/sample-competition --gif
 | `solutions/<順位>-<チーム>.md` | 解法カード: 点数、`構成要素` の表、9 次元、本人申告の効果 |
 | `diff.md` | **段の階段**（圏ごとの private）、**構成要素 × 解法の行列**（自陣は最後の列）、**圏ごとの使用率**、**差分の順位**と判定 |
 | `video/out/<slug>.mp4` | 5 場面: 到達点 → 階段 → 行列 → 差分の上位 3 → 次に試すもの |
+| `lt/deck.json` と `lt/sources/` | 持ち時間・聴衆に合わせた LT 原稿の下書きと、持ち運べる出典資料 |
 
 判定の列がこの道具の要点:
 
@@ -87,10 +89,35 @@ url: https://www.kaggle.com/competitions/<slug>/discussion/<id>
 
 書き出した動画は既定で git 管理外（GitHub Release などに添付して report.md からリンク）。
 
-## Claude Code と使う（任意）
+## LT・PowerPoint にする
 
-`CLAUDE.md` と `.claude/skills/` の 6 本が、「`<slug>` の振り返りを始めて」「解法を集めて」「7 位と 21 位を読んで」「差分を出して」「動画にして」「教訓」で各段を進める。
+動画と同じ差分分析を使い、LT 向けの下書きと出典を一つのフォルダにまとめる。
+
+```bash
+python retro.py lt examples/sample-competition --minutes 5 --audience "Kaggle 参加者"
+```
+
+出力先は対象コンペの `lt/`。`--output <directory>` で変更できる。既存の出力は既定で上書きしない。原稿を確認して作り直す場合だけ `--force` を使う。
+
+`retro lt` は Python 標準ライブラリのみで動き、`deck.json` と参照資料を書き出す。**このコマンドだけで PPTX は生成しない。** `retro-lt` スキルが、分析結果から発表の主張と話す内容を整え、利用可能なプレゼンテーション制作スキルや導入済みの [ppt-master](https://github.com/hugohe3/ppt-master) へ渡す。編集可能な PowerPoint、発表者ノート、確認用プレビューまで作る。
+
+汎用 LT 制作リポジトリ `lt-studio` を併用する場合は、そこで bundle を取り込める。両リポジトリを隣に置いた例:
+
+```bash
+# lt-studio のルートで実行
+python lt.py import ../kaggle-retro-kit/examples/sample-competition/lt --name kaggle-sample
+python lt.py validate talks/kaggle-sample
+python lt.py prepare talks/kaggle-sample
+```
+
+Kaggle の収集・分析はこのリポジトリが担当し、汎用側とは `schema_version: "1.0"` の LT bundle で接続する。Python パッケージ同士の依存は不要。自陣の実測、他者の本人申告、推定、不明の区別を維持し、サンプルは合成データであることを発表資料にも明記する。
+
+## エージェントと使う（任意）
+
+`CLAUDE.md` と `.claude/skills/` の 7 本が、「`<slug>` の振り返りを始めて」「解法を集めて」「7 位と 21 位を読んで」「差分を出して」「動画にして」「LT にして」「教訓」で各段を進める。
 **聞き取りをしない設計**: CLI で分からないもの（選んだ 2 本・単一モデルの点）は private 最良で代用して明記する。カード作成は 1 記事 1 サブエージェントで並行する。
+
+LT 用には Codex 向けの [`.agents/skills/retro-lt/SKILL.md`](.agents/skills/retro-lt/SKILL.md) と、Claude Code 向けの [`.claude/skills/retro-lt/SKILL.md`](.claude/skills/retro-lt/SKILL.md) を用意している。自動検出されない環境では、対象ファイルを読んで進めるよう明示する。例:「`.agents/skills/retro-lt/SKILL.md` を読んで、このコンペを 5 分の LT と PowerPoint にして」。
 
 ## 必要なもの
 
@@ -100,9 +127,10 @@ url: https://www.kaggle.com/competitions/<slug>/discussion/<id>
 
 | 段 | 必要 |
 |---|---|
-| `new` `diff` `lint` | Python 3.10+（標準ライブラリのみ） |
+| `new` `diff` `lint` `lt` | Python 3.10+（標準ライブラリのみ） |
 | `fetch` `collect` | [Kaggle CLI](https://github.com/Kaggle/kaggle-api) 1.6+ と `~/.kaggle/kaggle.json` |
 | `video` | Node 18+、`video/` で `npm install` と `npx playwright-core install chromium`、ffmpeg |
+| PowerPoint 制作 | 利用環境のプレゼンテーション制作スキル、または別途導入した ppt-master |
 
 開発: `pip install -e .[dev] && ruff check retrokit tests && python -m pytest -q`
 
