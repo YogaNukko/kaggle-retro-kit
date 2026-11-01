@@ -103,12 +103,27 @@ def read_index(path: Path) -> list[dict[str, str]]:
 
 
 def write_index(path: Path, rows: list[dict[str, str]]) -> None:
+    """Write the machine index and a separate formula-neutralized spreadsheet copy."""
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=INDEX_FIELDS)
         w.writeheader()
         for r in rows:
             w.writerow({k: r.get(k, "") for k in INDEX_FIELDS})
+    spreadsheet = path.with_name(path.stem + ".spreadsheet.csv")
+    with spreadsheet.open("w", newline="", encoding="utf-8-sig") as f:
+        w = csv.DictWriter(f, fieldnames=INDEX_FIELDS, quoting=csv.QUOTE_ALL)
+        w.writeheader()
+        for row in rows:
+            w.writerow({k: spreadsheet_cell(row.get(k, "")) for k in INDEX_FIELDS})
+
+
+def spreadsheet_cell(value: str) -> str:
+    """Treat formula-like cells as text, including whitespace/control prefixes."""
+    first = value.lstrip(" \t\r\n\ufeff")[:1]
+    if first in {"=", "+", "-", "@", "＝", "＋", "－", "＠"} or value.startswith(("\t", "\r", "\n")):
+        return "'" + value
+    return value
 
 
 def update(index: list[dict[str, str]], cands: list[dict[str, str]]) -> tuple[list[dict[str, str]], int]:

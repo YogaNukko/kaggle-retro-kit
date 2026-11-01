@@ -3,12 +3,19 @@ on:
   push:
     branches: [main]
   pull_request:
+permissions:
+  contents: read
+env:
+  PYTHONUTF8: "1"
 jobs:
   python:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: "3.10"
       - run: pip install ruff pytest
@@ -16,14 +23,21 @@ jobs:
       - run: python -m pytest -q
       - run: python retro.py lint examples/sample-competition && python retro.py diff examples/sample-competition
   video-smoke:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
+    timeout-minutes: 15
+    env:
+      RETRO_BROWSER_TESTS: "1"
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
-          node-version: "20"
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: "24"
       - run: sudo apt-get update && sudo apt-get install -y ffmpeg
-      - run: cd video && npm install && npx playwright-core install --with-deps chromium
+      - run: cd video && npm ci && npx playwright-core install --with-deps chromium
+      - run: node --test video/tests/*.test.mjs
       - run: python retro.py diff examples/sample-competition
       - run: cd video && node tools/render.mjs info --page pages/explainer.html --data ../examples/sample-competition/video/data.json --out /tmp/out
       - run: cd video && node tools/render.mjs sheet 12 --page pages/explainer.html --data ../examples/sample-competition/video/data.json --out /tmp/out
+      - run: cd video && node tools/render.mjs video --page pages/custom-example.html --out /tmp/video --fps 1 --width 800 --height 450 --gif

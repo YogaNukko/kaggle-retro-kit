@@ -22,3 +22,10 @@ node tools/render.mjs video --page pages/explainer.html --data ... --out ... --n
 `Arch.defineShow({ scenes: [{ id, title, dur, draw(p, u), caps: [[開始秒, 字幕]] }] })` がそれを組み立てる。
 
 フォント: ページは Google Fonts の Noto Sans JP を読みに行き、読めなければ 3 秒で system フォントに落ちる。
+
+安全性: `--data` は JSON オブジェクトのみ。`--name` はパスではなくファイル名（区切り・予約文字は禁止）。
+Chromium の sandbox は有効。root ではなく通常ユーザーで実行し、起動できない場合も sandbox を無効化しない。
+`--page` は信頼できる自作ページだけを指定する。詳しくは [SECURITY.md](../SECURITY.md)。
+
+フレームの保存先は毎回異なる `--out/.retro-render-*`。`frames` と `--keep-frames` は保存先を表示する。
+既存の `frames/`・`_sheet/` は削除しない。失敗した処理の一時ファイルも片付ける。

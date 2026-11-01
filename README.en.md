@@ -1,5 +1,8 @@
 # kaggle-retro-kit (English)
 
+See [SECURITY.md](SECURITY.md) for safe use. Open the generated `writeups_index.spreadsheet.csv`
+in spreadsheet applications; `writeups_index.csv` contains raw machine data. Only render trusted HTML/JavaScript with `--page`.
+
 > The primary README, templates, skills and on-screen strings are in Japanese. Card headings and table columns are accepted in English too (`## Elements`, `Element | Dimension | Used | Effect | Evidence`), and the video strings live in one `T` object in `video/pages/explainer.js`. [日本語 README](README.md)
 
 **Turn a finished Kaggle competition into a gap analysis against the medal bands — and a 50-second explainer video.**
