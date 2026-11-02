@@ -1,7 +1,7 @@
 # CLAUDE.md — kaggle-retro-kit
 
 終わった Kaggle コンペの振り返り: 自陣の結果を固定し、上位の解法記事を同じ形のカードにし、メダル圏ごとの差分を計算し、
-解説動画にする。1 コンペ = 1 フォルダ `competitions/<slug>/`。
+解説動画と LT 資料にする。1 コンペ = 1 フォルダ `competitions/<slug>/`。
 
 | 段 | 伝え方 | 動くもの |
 |---|---|---|
@@ -11,6 +11,12 @@
 | 4 差分の分析 | 「差分を出して」「どこで差がついた」 | `python retro.py diff` + skill `retro-report` |
 | 5 動画 | 「動画にして」 | `python retro.py video` + skill `retro-video` |
 | 6 教訓 | 「教訓」「還元」 | skill `retro-lessons` |
+| LT | 「LT にして」「PowerPoint にして」 | `python retro.py lt` + skill `retro-lt` → 利用可能な資料制作スキル |
+
+LT の制作手順は `.claude/skills/retro-lt/SKILL.md`（Codex 向けは `.agents/skills/retro-lt/SKILL.md`）。
+`retro lt` は `deck.json` と出典をまとめた bundle の出力までで、PPTX の生成は行わない。
+`lt-studio` があれば bundle を取り込み、同リポジトリの `lt-create` スキルで制作へ進める。
+利用できる資料制作スキルがない場合は、その状況と完成している素材を明示する。
 
 ## 分析を正直に保つ約束
 

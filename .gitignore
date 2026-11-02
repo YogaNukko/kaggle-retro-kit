@@ -24,6 +24,10 @@ examples/*/video/out/*.mp4
 examples/*/video/out/*.gif
 examples/*/video/out/*.webm
 
+# LT bundles and presentation work are regenerated from the tracked analysis.
+competitions/*/lt/
+examples/*/lt/
+
 __pycache__/
 .pytest_cache/
 .ruff_cache/

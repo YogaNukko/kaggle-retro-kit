@@ -5,7 +5,7 @@ in spreadsheet applications; `writeups_index.csv` contains raw machine data. Onl
 
 > The primary README, templates, skills and on-screen strings are in Japanese. Card headings and table columns are accepted in English too (`## Elements`, `Element | Dimension | Used | Effect | Evidence`), and the video strings live in one `T` object in `video/pages/explainer.js`. [日本語 README](README.md)
 
-**Turn a finished Kaggle competition into a gap analysis against the medal bands — and a 50-second explainer video.**
+**Turn a finished Kaggle competition into a gap analysis against the medal bands, a 50-second explainer video, and lightning-talk materials.**
 
 You finished #102. The writeups are out. This kit answers, with numbers you can defend:
 *what did the bands above me do that I did not, and which of those gaps actually separated the bands?*
@@ -14,7 +14,7 @@ You finished #102. The writeups are out. This kit answers, with numbers you can 
 
 *Synthetic example (`examples/sample-competition`). Every number on screen is labelled **measured** (ours) or **claimed** (theirs).*
 
-## Five commands
+## Main commands
 
 ```bash
 python retro.py new     <slug> --name "<competition>"          # scaffold competitions/<slug>/
@@ -23,9 +23,11 @@ python retro.py collect <slug>                                  # discussion wri
 #   ... write one card per writeup (templates/solution_card.md; Claude Code skill `retro-card` does it) ...
 python retro.py diff    <slug>                                  # cards x your pipeline -> diff.md + video/data.json
 python retro.py video   <slug> --gif                            # -> MP4, GIF, poster
+python retro.py lt      <slug> --minutes 5                      # -> LT draft and source bundle, ready for deck production
 ```
 
-No config files, no interactive prompts, no API keys beyond the Kaggle CLI's own `kaggle.json`.
+The CLI needs no config files, no interactive prompts, and no API keys beyond the Kaggle CLI's own `kaggle.json`.
+External PowerPoint authoring skills have their own runtime requirements.
 Try it without any credentials:
 
 ```bash
@@ -42,6 +44,7 @@ python retro.py video examples/sample-competition --gif
 | `solutions/<rank>-<team>.md` | one card per writeup: scores, an `Elements` table, nine pipeline dimensions, the author's claimed effects |
 | `diff.md` | **ladder** (private score by band), **element matrix** (who used what, you last), **usage by band**, **ranked gaps** with a verdict |
 | `video/out/<slug>.mp4` | five scenes: where you finished → ladder → matrix → top-3 gaps → what to try first |
+| `lt/deck.json` and `lt/sources/` | an LT draft with a time budget, audience, evidence labels, and portable source files |
 
 The verdict column is the point of the kit:
 
@@ -92,20 +95,46 @@ Your own `own/pipeline.md` has the same table; rows you *tried and dropped* get 
 
 Rendered media is git-ignored by default; attach it to a GitHub Release and link from your report.
 
-## With Claude Code (optional)
+## Lightning talks and PowerPoint
 
-`CLAUDE.md` and six skills in `.claude/skills/` drive the steps conversationally — "start the retrospective for `<slug>`",
-"collect writeups", "read #7 and #21", "diff", "make the video", "lessons". They are written to **not** interview you:
+Export a draft and its sources from the same gap analysis used by the video:
+
+```bash
+python retro.py lt examples/sample-competition --minutes 5 --audience "Kaggle participants"
+```
+
+The default destination is `lt/` inside the competition directory. Use `--output <directory>` to choose another destination.
+Existing output is protected by default; use `--force` only after checking edits you want to preserve.
+
+The exporter uses only the Python standard library. **It does not generate a PPTX by itself.** The `retro-lt` skill refines the narrative and hands the bundle to an available presentation-authoring skill or a separately installed [ppt-master](https://github.com/hugohe3/ppt-master). That production step creates the editable PowerPoint, speaker notes, and previews for visual review.
+
+The separate general-purpose `lt-studio` repository can import the bundle. If the repositories are siblings, run from the `lt-studio` root:
+
+```bash
+python lt.py import ../kaggle-retro-kit/examples/sample-competition/lt --name kaggle-sample
+python lt.py validate talks/kaggle-sample
+python lt.py prepare talks/kaggle-sample
+```
+
+Kaggle collection and analysis stay here. The integration uses an LT bundle with `schema_version: "1.0"`; neither Python package imports the other. Keep measured, author-reported, inferred, and unknown evidence distinct. Mark the synthetic example as synthetic in the deck too.
+
+## With an agent (optional)
+
+`CLAUDE.md` and seven skills in `.claude/skills/` drive the steps conversationally — "start the retrospective for `<slug>`",
+"collect writeups", "read #7 and #21", "diff", "make the video", "make an LT", "lessons". They are written to **not** interview you:
 the only facts the CLI cannot know (which two submissions you selected, your single-model score) default to the best private score
 and are flagged. Card writing is parallelised one writeup per sub-agent.
+
+The LT skill is available at [`.agents/skills/retro-lt/SKILL.md`](.agents/skills/retro-lt/SKILL.md) for Codex and [`.claude/skills/retro-lt/SKILL.md`](.claude/skills/retro-lt/SKILL.md) for Claude Code. If your environment does not discover it automatically, ask the agent to read the exact path and use it to create the requested LT.
 
 ## Requirements
 
 | step | needs |
 |---|---|
-| `new` `diff` `lint` | Python 3.10+ (standard library only) |
+| `new` `diff` `lint` `lt` | Python 3.10+ (standard library only) |
 | `fetch` `collect` | [Kaggle CLI](https://github.com/Kaggle/kaggle-api) 1.6+ with `~/.kaggle/kaggle.json` |
 | `video` | Node 18+, `npm install` + `npx playwright-core install chromium` in `video/`, ffmpeg on PATH |
+| PowerPoint authoring | an available presentation-authoring skill or a separately installed ppt-master |
 
 Development: `pip install -e .[dev] && ruff check retrokit tests && python -m pytest -q`.
 

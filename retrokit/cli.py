@@ -12,6 +12,8 @@ from . import own as ownmod
 from .diff import write as write_diff
 from .frontmatter import dump, parse
 from .lint import lint_dir
+from .lt import DEFAULT_AUDIENCE
+from .lt import write as write_lt
 from .medal import cutoffs
 from .scaffold import new as scaffold_new
 from .video import render as render_video
@@ -163,6 +165,18 @@ def cmd_video(a: argparse.Namespace) -> int:
     return render_video(root, d, a.page, a.name, a.fps, a.gif, a.sheet)
 
 
+def cmd_lt(a: argparse.Namespace) -> int:
+    d = comp_dir(root_dir(), a.slug)
+    try:
+        deck = write_lt(d, minutes=a.minutes, audience=a.audience, output=a.output, force=a.force, top_n=a.top)
+    except (OSError, ValueError) as e:
+        print(f"[ERROR] {e}")
+        return 1
+    print(f"書いた: {deck}")
+    print("次: retro-lt スキルで原稿を整え、資料作成スキルで PowerPoint を制作する（lt-studio にも取り込めます）")
+    return 0
+
+
 def cmd_lint(a: argparse.Namespace) -> int:
     root = root_dir()
     rc = 0
@@ -185,7 +199,7 @@ def cmd_medal(a: argparse.Namespace) -> int:
 
 
 def main(argv: list[str] | None = None) -> int:
-    ap = argparse.ArgumentParser(prog="retro", description="終わった Kaggle コンペの振り返り: 自陣の確定 → 解法の収集 → 差分 → 動画")
+    ap = argparse.ArgumentParser(prog="retro", description="終わった Kaggle コンペの振り返り: 自陣の確定 → 解法の収集 → 差分 → 動画 / LT")
     ap.add_argument("--version", action="version", version=__version__)
     sub = ap.add_subparsers(dest="cmd", required=True)
 
@@ -225,6 +239,15 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--gif", action="store_true", help="GIF も書く")
     p.add_argument("--sheet", action="store_true", help="一覧画像だけ（動画は書かない。確認用）")
     p.set_defaults(fn=cmd_video)
+
+    p = sub.add_parser("lt", help="分析から出典付き LT 原稿と資料を生成（lt-studio 互換）")
+    p.add_argument("slug")
+    p.add_argument("--minutes", type=int, default=5, help="持ち時間（分、既定 5）")
+    p.add_argument("--audience", default=DEFAULT_AUDIENCE, help="想定する聴衆")
+    p.add_argument("--top", type=int, default=20, help="比較する上位順位の範囲")
+    p.add_argument("--output", type=Path, help="出力フォルダ（既定 competitions/<slug>/lt）")
+    p.add_argument("--force", action="store_true", help="生成対象のみ上書き（手書きの原稿やノートは保持）")
+    p.set_defaults(fn=cmd_lt)
 
     p = sub.add_parser("lint", help="カード・自陣・レポートの形を検査")
     p.add_argument("slugs", nargs="+")
